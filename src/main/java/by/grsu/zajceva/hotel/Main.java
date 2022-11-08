@@ -6,18 +6,18 @@ import by.grsu.zajceva.hotel.bd.model.*;
 public class Main {
 
 	public static void main(String[] args) {
-		order order = new order();
-		user user = new user();
-		service service = new service();
-		room room = new room();
+		Order order = new Order();
+		User user = new User();
+		Service service = new Service();
+		Room room = new Room();
 		
 		order.setCreated(new Timestamp(new Date().getTime()));
 		order.setId(1);
-		order.setRoom_id(100);
-		order.setService_id(1);
-		order.setTime_stay(3);
+		order.setRoomId(100);
+		order.setServiceId(1);
+		order.setTimeStay(3);
 		order.setUpdated(new Timestamp(new Date().getTime()));
-		order.setUser_id(1);
+		order.setUserId(1);
 		System.out.println(order.toString());
 		
 		user.setCreated(new Timestamp(new Date().getTime()));
@@ -40,7 +40,7 @@ public class Main {
 		room.setCreated(new Timestamp(new Date().getTime()));
 		room.setApartment("A");
 		room.setId(1);
-		room.setNumber_beds(1);
+		room.setNumberBeds(1);
 		room.setPrice(10);
 		room.setStatus(2);
 		room.setUpdated(new Timestamp(new Date().getTime()));

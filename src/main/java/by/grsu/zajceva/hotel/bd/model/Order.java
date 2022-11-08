@@ -1,11 +1,11 @@
 package by.grsu.zajceva.hotel.bd.model;
 import java.sql.Timestamp;
-public class order {
+public class Order {
 private Integer id;
-private Integer service_id;
-private Integer user_id;
-private Integer room_id;
-private Integer time_stay;
+private Integer serviceId;
+private Integer userId;
+private Integer roomId;
+private Integer timeStay;
 private Timestamp created;
 private Timestamp updated;
 public Integer getId() {
@@ -14,29 +14,29 @@ public Integer getId() {
 public void setId(Integer id) {
 	this.id = id;
 }
-public Integer getService_id() {
-	return service_id;
+public Integer getServiceId() {
+	return serviceId;
 }
-public void setService_id(Integer service_id) {
-	this.service_id = service_id;
+public void setServiceId(Integer serviceId) {
+	this.serviceId = serviceId;
 }
-public Integer getUser_id() {
-	return user_id;
+public Integer getUserId() {
+	return userId;
 }
-public void setUser_id(Integer user_id) {
-	this.user_id = user_id;
+public void setUserId(Integer userId) {
+	this.userId = userId;
 }
-public Integer getRoom_id() {
-	return room_id;
+public Integer getRoomId() {
+	return roomId;
 }
-public void setRoom_id(Integer room_id) {
-	this.room_id = room_id;
+public void setRoomId(Integer roomId) {
+	this.roomId = roomId;
 }
-public Integer getTime_stay() {
-	return time_stay;
+public Integer getTimeStay() {
+	return timeStay;
 }
-public void setTime_stay(Integer time_stay) {
-	this.time_stay = time_stay;
+public void setTimeStay(Integer timeStay) {
+	this.timeStay = timeStay;
 }
 public Timestamp getCreated() {
 	return created;
@@ -52,7 +52,8 @@ public void setUpdated(Timestamp updated) {
 }
 @Override
 public String toString() {
-	return "order [id=" + id + ", service_id=" + service_id + ", user_id=" + user_id + ", room_id=" + room_id
-			+ ", time_stay=" + time_stay + ", created=" + created + ", updated=" + updated + "]";
+	return "Order [id=" + id + ", serviceId=" + serviceId + ", userId=" + userId + ", roomId=" + roomId + ", timeStay="
+			+ timeStay + ", created=" + created + ", updated=" + updated + "]";
 }
+
 }

@@ -1,10 +1,10 @@
 package by.grsu.zajceva.hotel.bd.model;
 
 import java.sql.Timestamp;
-public class room {
+public class Room {
 	private Integer id;
 	private String apartment;
-	private Integer number_beds;
+	private Integer numberBeds;
 	private float price;
 	private Integer status;
 	private Timestamp created;
@@ -21,11 +21,11 @@ public class room {
 	public void setApartment(String apartment) {
 		this.apartment = apartment;
 	}
-	public Integer getNumber_beds() {
-		return number_beds;
+	public Integer getNumberBeds() {
+		return numberBeds;
 	}
-	public void setNumber_beds(Integer number_beds) {
-		this.number_beds = number_beds;
+	public void setNumberBeds(Integer numberBeds) {
+		this.numberBeds = numberBeds;
 	}
 	public float getPrice() {
 		return price;
@@ -53,7 +53,7 @@ public class room {
 	}
 	@Override
 	public String toString() {
-		return "room [id=" + id + ", apartment=" + apartment + ", number_beds=" + number_beds + ", price=" + price
+		return "room [id=" + id + ", apartment=" + apartment + ", numberBeds=" + numberBeds + ", price=" + price
 				+ ", status=" + status + ", created=" + created + ", updated=" + updated + "]";
 	}
 }

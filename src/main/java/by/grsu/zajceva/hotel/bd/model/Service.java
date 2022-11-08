@@ -1,6 +1,6 @@
 package by.grsu.zajceva.hotel.bd.model;
 import java.sql.Timestamp;
-public class service {
+public class Service {
 	private Integer id;
 	private String type;
 	private float price;

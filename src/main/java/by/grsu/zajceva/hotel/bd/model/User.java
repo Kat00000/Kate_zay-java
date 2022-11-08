@@ -1,6 +1,6 @@
 package by.grsu.zajceva.hotel.bd.model;
 import java.sql.Timestamp;
-public class user {
+public class User {
 	private Integer id;
 	private String name;
 	private String email;
