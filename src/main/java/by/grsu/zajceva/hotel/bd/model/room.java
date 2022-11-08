@@ -1,4 +1,5 @@
 package by.grsu.zajceva.hotel.bd.model;
+
 import java.sql.Timestamp;
 public class room {
 	private Integer id;
