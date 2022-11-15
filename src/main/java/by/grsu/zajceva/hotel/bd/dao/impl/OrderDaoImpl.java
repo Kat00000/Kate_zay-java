@@ -28,7 +28,7 @@ public class OrderDaoImpl extends AbstractDao implements IDao<Integer, Order> {
 	@Override
 	public void insert(Order entity) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c.prepareStatement("insert into orderr(serviceId,userId,roomId,timeStay, created, updated) values(?,?,?,?,?,?)");
+			PreparedStatement pstmt = c.prepareStatement("insert into orderObject(service_id,user_id,room_id,time_stay, created, updated) values(?,?,?,?,?,?)");
 			pstmt.setInt(1, entity.getServiceId());
 			pstmt.setObject(2, entity.getUserId());
 			pstmt.setInt(3, entity.getRoomId());
@@ -36,7 +36,7 @@ public class OrderDaoImpl extends AbstractDao implements IDao<Integer, Order> {
 			pstmt.setTimestamp(5, entity.getCreated());
 			pstmt.setTimestamp(6, entity.getUpdated());
 			pstmt.executeUpdate();
-			entity.setId(getGeneratedId(c, "orderr"));
+			entity.setId(getGeneratedId(c, "orderObject"));
 		} catch (SQLException e) {
 			throw new RuntimeException("can't insert Order entity", e);
 		}
@@ -45,7 +45,7 @@ public class OrderDaoImpl extends AbstractDao implements IDao<Integer, Order> {
 	@Override
 	public void update(Order entity) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c.prepareStatement("update orderr set serviceId=?,userId=?,roomId=?,timeStay=?, updated=? where id=?");
+			PreparedStatement pstmt = c.prepareStatement("update orderObject set service_id=?,user_id=?,room_id=?,time_stay=?, updated=? where id=?");
 			pstmt.setInt(1, entity.getServiceId());
 			pstmt.setObject(2, entity.getUserId());
 			pstmt.setInt(3, entity.getRoomId());
@@ -61,7 +61,7 @@ public class OrderDaoImpl extends AbstractDao implements IDao<Integer, Order> {
 	@Override
 	public void delete(Integer id) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c.prepareStatement("delete from orderr where id=?");
+			PreparedStatement pstmt = c.prepareStatement("delete from orderObject where id=?");
 			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -74,7 +74,7 @@ public class OrderDaoImpl extends AbstractDao implements IDao<Integer, Order> {
 	public Order getById(Integer id) {
 		Order entity = null;
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c.prepareStatement("select * from orderr where id=?");
+			PreparedStatement pstmt = c.prepareStatement("select * from orderObject where id=?");
 			pstmt.setInt(1, id);
 
 			ResultSet rs = pstmt.executeQuery();
@@ -93,7 +93,7 @@ public class OrderDaoImpl extends AbstractDao implements IDao<Integer, Order> {
 	public List<Order> getAll() {
 		List<Order> entitiesList = new ArrayList<>();
 		try (Connection c = createConnection()) {
-			ResultSet rs = c.createStatement().executeQuery("select * from orderr");
+			ResultSet rs = c.createStatement().executeQuery("select * from orderObject");
 			while (rs.next()) {
 				Order entity = rowToEntity(rs);
 				entitiesList.add(entity);
@@ -108,10 +108,10 @@ public class OrderDaoImpl extends AbstractDao implements IDao<Integer, Order> {
 	private Order rowToEntity(ResultSet rs) throws SQLException {
 		Order entity = new Order();
 		entity.setId(rs.getInt("id"));
-		entity.setServiceId(rs.getInt("serviceId"));
-		entity.setUserId(rs.getInt("userId"));
-		entity.setRoomId(rs.getInt("roomId"));
-		entity.setTimeStay(rs.getInt("timeStay"));
+		entity.setServiceId(rs.getInt("service_id"));
+		entity.setUserId(rs.getInt("user_id"));
+		entity.setRoomId(rs.getInt("room_id"));
+		entity.setTimeStay(rs.getInt("time_stay"));
 		entity.setCreated(rs.getTimestamp("created"));
 		entity.setUpdated(rs.getTimestamp("updated"));
 		return entity;

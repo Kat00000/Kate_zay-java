@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 public class Room {
 	private Integer id;
 	private String apartment;
-	private Integer numberBeds;
+	private Integer numberBed;
 	private float price;
 	private Integer status;
 	private Timestamp created;
@@ -21,11 +21,11 @@ public class Room {
 	public void setApartment(String apartment) {
 		this.apartment = apartment;
 	}
-	public Integer getNumberBeds() {
-		return numberBeds;
+	public Integer getNumberBed() {
+		return numberBed;
 	}
-	public void setNumberBeds(Integer numberBeds) {
-		this.numberBeds = numberBeds;
+	public void setNumberBed(Integer numberBed) {
+		this.numberBed = numberBed;
 	}
 	public float getPrice() {
 		return price;
@@ -53,7 +53,7 @@ public class Room {
 	}
 	@Override
 	public String toString() {
-		return "room [id=" + id + ", apartment=" + apartment + ", numberBeds=" + numberBeds + ", price=" + price
+		return "room [id=" + id + ", apartment=" + apartment + ", numberBeds=" + numberBed + ", price=" + price
 				+ ", status=" + status + ", created=" + created + ", updated=" + updated + "]";
 	}
 }

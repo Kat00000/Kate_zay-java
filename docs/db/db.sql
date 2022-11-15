@@ -1,7 +1,7 @@
 CREATE TABLE room (
 	id integer PRIMARY KEY AUTOINCREMENT,
 	apartment varchar NOT NULL,
-	numberBeds integer NOT NULL,
+	number_bed integer NOT NULL,
 	price integer NOT NULL,
 	status integer NOT NULL,
 	created datetime NOT NULL,
@@ -25,12 +25,12 @@ CREATE TABLE user (
 	updated datetime NOT NULL
 );
 
-CREATE TABLE orderr (
+CREATE TABLE orderObject (
 	id integer PRIMARY KEY AUTOINCREMENT,
-	serviceId integer NOT NULL REFERENCES service(id),
-	timeStay integer NOT NULL,
-	userId integer  REFERENCES user(id),
-	roomId integer NOT NULL REFERENCES room(id),
+	service_id integer NOT NULL REFERENCES service(id),
+	time_stay integer NOT NULL,
+	user_id integer  REFERENCES user(id),
+	room_id integer NOT NULL REFERENCES room(id),
 	created datetime NOT NULL,
 	updated datetime NOT NULL
 );

@@ -43,7 +43,7 @@ public class Main {
 		room.setCreated(new Timestamp(new Date().getTime()));
 		room.setApartment("A");
 		room.setId(1);
-		room.setNumberBeds(1);
+		room.setNumberBed(1);
 		room.setPrice(10);
 		room.setStatus(2);
 		room.setUpdated(new Timestamp(new Date().getTime()));
