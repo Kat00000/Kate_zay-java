@@ -18,19 +18,39 @@
 			<input type="hidden" name="id" value="${dto.id}" />
 			<div class="row">
 				<div class="input-field col s12">  
-					<input type="text" name="timeStay" value="${dto.timeStay}" ${empty dto.id ? '' : 'disabled'} > <label for="timeStay">Time stay</label>
+					<input type="text" name="timeStay" value="${dto.timeStay}"  > <label for="timeStay">Time stay</label>
 				</div>
 			</div>
 			<div class="row">
-				<div class="input-field col s6">
-					<input type="text" name="userId" value="${dto.userId}"> <label for="ownerId">User ID</label>
+				
+				<div class="col s6">
+					<label for="modelId">User ID</label> 
+					<select name="userId" class="browser-default" required>
+						<option value="">--select users--</option>
+						<c:forEach items="${allUsers}" var="user">
+							<option value="${user.id}" <c:if test="${user.id eq dto.userId}">selected="selected"</c:if>>${user.name}</option>
+						</c:forEach>
+					</select>
 				</div>
-				<div class="input-field col s6">
-					<input type="text" name="roomId" value="${dto.roomId}"> <label for="roomId">Room ID</label>
+				<div class="col s6">
+					<label for="roomId">Room ID</label> 
+					<select name="roomId" class="browser-default" required>
+						<option value="">--select rooms--</option>
+						<c:forEach items="${allRooms}" var="room">
+							<option value="${room.id}" <c:if test="${room.id eq dto.roomId}">selected="selected"</c:if>>${room.number}</option>
+						</c:forEach>
+					</select>
 				</div>
-				<div class="input-field col s6">
-					<input type="text" name="serviceId" value="${dto.serviceId}"> <label for="roomId">Service ID</label>
+				<div class="col s6">
+					<label for="serviceId">Service ID</label> 
+					<select name="serviceId" class="browser-default" required>
+						<option value="">--select service--</option>
+						<c:forEach items="${allServices}" var="service">
+							<option value="${service.id}" <c:if test="${service.id eq dto.serviceId}">selected="selected"</c:if>>${service.type}</option>
+						</c:forEach>
+					</select>
 				</div>
+				
 			</div>
 		</div>
 		<div class="row">

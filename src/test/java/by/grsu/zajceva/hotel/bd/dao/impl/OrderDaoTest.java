@@ -126,6 +126,7 @@ public class OrderDaoTest extends AbstractTest {
 	private Room saveRoom() {
 		Room entity = new Room();
 		entity.setApartment("A");
+		entity.setNumber("100");
 		entity.setNumberBed(1);
 		entity.setStatus(1);
 		entity.setCreated(getCurrentTime());

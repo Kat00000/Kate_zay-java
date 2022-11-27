@@ -23,6 +23,9 @@ import by.grsu.zajceva.hotel.bd.model.Room;
 import by.grsu.zajceva.hotel.bd.model.Service;
 import by.grsu.zajceva.hotel.bd.model.User;
 import by.grsu.zajceva.hotel.web.dto.OrderDto;
+import by.grsu.zajceva.hotel.web.dto.RoomDto;
+import by.grsu.zajceva.hotel.web.dto.ServiceDto;
+import by.grsu.zajceva.hotel.web.dto.UserDto;
 
 
 
@@ -44,9 +47,9 @@ public class OrderServlet extends HttpServlet {
 	}
 
 	private void handleListView(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		List<Order> order = orderDao.getAll(); // get data
+		List<Order> orders = orderDao.getAll(); // get data
 
-		List<OrderDto> dtos = order.stream().map((entity) -> {
+		List<OrderDto> dtos = orders.stream().map((entity) -> {
 			OrderDto dto = new OrderDto();
 			// copy necessary fields as-is
 			dto.setId(entity.getId());
@@ -84,15 +87,41 @@ public class OrderServlet extends HttpServlet {
 			dto.setUserId(entity.getUserId());
 		}
 		req.setAttribute("dto", dto);
+		req.setAttribute("allUsers", getAllUsersDtos());
+		req.setAttribute("allRooms", getAllRoomsDtos());
+		req.setAttribute("allServices", getAllServicesDtos());
 		req.getRequestDispatcher("order-edit.jsp").forward(req, res);
 	}
-
+	private List<UserDto> getAllUsersDtos() {
+		return userDao.getAll().stream().map((entity) -> {
+			UserDto dto = new UserDto();
+			dto.setId(entity.getId());
+			dto.setName(entity.getName());	
+			return dto;
+		}).collect(Collectors.toList());
+	}
+	private List<RoomDto> getAllRoomsDtos() {
+		return roomDao.getAll().stream().map((entity) -> {
+			RoomDto dto = new RoomDto();
+			dto.setId(entity.getId());
+			dto.setNumber(entity.getNumber());
+			return dto;
+		}).collect(Collectors.toList());
+	}
+	private List<ServiceDto> getAllServicesDtos() {
+		return serviceDao.getAll().stream().map((entity) -> {
+			ServiceDto dto = new ServiceDto();
+			dto.setId(entity.getId());
+			dto.setType(entity.getType());
+			return dto;
+		}).collect(Collectors.toList());
+	}
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("doPost");
 		Order order = new Order();
 		String orderIdStr = req.getParameter("id");
-		String roomIdStr = req.getParameter("roomlId");
+		String roomIdStr = req.getParameter("roomId");
 		String userIdStr = req.getParameter("userId");
 		String serviceIdStr = req.getParameter("serviceId");
 

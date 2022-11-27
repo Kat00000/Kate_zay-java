@@ -29,13 +29,14 @@ public class RoomDaoImpl extends AbstractDao implements IDao<Integer, Room> {
 	@Override
 	public void insert(Room entity) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c.prepareStatement("insert into room(apartment,number_bed,price,status, created, updated) values(?,?,?,?,?,?)");
+			PreparedStatement pstmt = c.prepareStatement("insert into room(apartment,number,number_bed,price,status, created, updated) values(?,?,?,?,?,?,?)");
 			pstmt.setString(1, entity.getApartment());
-			pstmt.setInt(2, entity.getNumberBed());
-			pstmt.setFloat(3,entity.getPrice());
-			pstmt.setInt(4, entity.getStatus());
-			pstmt.setTimestamp(5, entity.getCreated());
-			pstmt.setTimestamp(6, entity.getUpdated());
+			pstmt.setString(2, entity.getNumber());
+			pstmt.setInt(3, entity.getNumberBed());
+			pstmt.setFloat(4,entity.getPrice());
+			pstmt.setInt(5, entity.getStatus());
+			pstmt.setTimestamp(6, entity.getCreated());
+			pstmt.setTimestamp(7, entity.getUpdated());
 			pstmt.executeUpdate();
 			entity.setId(getGeneratedId(c, "room"));
 		} catch (SQLException e) {
@@ -46,13 +47,14 @@ public class RoomDaoImpl extends AbstractDao implements IDao<Integer, Room> {
 	@Override
 	public void update(Room entity) {
 		try (Connection c = createConnection()) {
-			PreparedStatement pstmt = c.prepareStatement("update room set apartment=?,number_bed=?,price=?,status=?, updated=? where id=?");
+			PreparedStatement pstmt = c.prepareStatement("update room set apartment=?,number=?,number_bed=?,price=?,status=?, updated=? where id=?");
 			pstmt.setString(1, entity.getApartment());
-			pstmt.setInt(2, entity.getNumberBed());
-			pstmt.setFloat(3,entity.getPrice());
-			pstmt.setInt(4, entity.getStatus());
-			pstmt.setTimestamp(5, entity.getUpdated());
-			pstmt.setInt(6, entity.getId());
+			pstmt.setString(2, entity.getNumber());
+			pstmt.setInt(3, entity.getNumberBed());
+			pstmt.setFloat(4,entity.getPrice());
+			pstmt.setInt(5, entity.getStatus());
+			pstmt.setTimestamp(6, entity.getUpdated());
+			pstmt.setInt(7, entity.getId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException("can't update Room entity", e);
@@ -110,6 +112,7 @@ public class RoomDaoImpl extends AbstractDao implements IDao<Integer, Room> {
 		Room entity = new Room();
 		entity.setId(rs.getInt("id"));
 		entity.setApartment(rs.getString("apartment"));
+		entity.setNumber(rs.getString("number"));
 		entity.setNumberBed(rs.getInt("number_bed"));
 		entity.setPrice(rs.getFloat("price"));
 		entity.setStatus(rs.getInt("status"));

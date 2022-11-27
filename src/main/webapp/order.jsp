@@ -2,9 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
-<c:set var="pageTitle" value="Hotel list" scope="application" />
+<c:set var="pageTitle" value="Orders list" scope="application" />
 <t:wrapper>
-<h1>Hotel list</h1>
+<h1>Orders list</h1>
 	<div class="row">
 		<div class="col s12">
 			<div class="center-align">

@@ -19,9 +19,11 @@
 	<div class="nav-wrapper container">
 		<a id="logo-container" href="#" class="brand-logo">Logo</a>
 		<ul class="right hide-on-med-and-down">
-		    <li><a href="index.jsp"> Items list</a></li>
-			<li><a href="hotelroom.jsp"> Hotel rooms</a></li>
-			<li><a href="service.jsp"> Services</a></li>
+		    <li><a href="order"> Items list</a></li>
+		    <li><a href="user"> Users</a></li>
+			<li><a href="room"> Hotel rooms</a></li>
+			<li><a href="service"> Services</a></li>
+			
 		</ul>
 	</div>
 </nav>

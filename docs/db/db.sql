@@ -1,6 +1,7 @@
 CREATE TABLE room (
 	id integer PRIMARY KEY AUTOINCREMENT,
 	apartment varchar NOT NULL,
+	number varchar NOT NULL,
 	number_bed integer NOT NULL,
 	price integer NOT NULL,
 	status integer NOT NULL,

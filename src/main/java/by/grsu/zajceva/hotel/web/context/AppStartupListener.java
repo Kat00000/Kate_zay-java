@@ -44,6 +44,7 @@ public class AppStartupListener implements ServletContextListener {
 
 		Room roomEntity = new Room();
 		roomEntity.setApartment("A");
+		roomEntity.setNumber("100");
 		roomEntity.setNumberBed(1);
 		roomEntity.setPrice(10);
 		roomEntity.setStatus(1);

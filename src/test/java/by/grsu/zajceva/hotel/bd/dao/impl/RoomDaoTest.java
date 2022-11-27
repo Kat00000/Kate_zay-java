@@ -16,6 +16,7 @@ public class RoomDaoTest extends AbstractTest {
 	public void testInsert() {
 		Room entity = new Room();
 		entity.setApartment("A");
+		entity.setNumber("100");
 		entity.setNumberBed(1);
 		entity.setPrice(10);
 		entity.setStatus(1);
@@ -29,6 +30,7 @@ public class RoomDaoTest extends AbstractTest {
 	public void testUpdate() {
 		Room entity = new Room();
 		entity.setApartment("A");
+		entity.setNumber("100");
 		entity.setNumberBed(1);
 		entity.setPrice(10);
 		entity.setStatus(1);
@@ -37,10 +39,12 @@ public class RoomDaoTest extends AbstractTest {
 		dao.insert(entity);
 
 		String newApartment = "B";
+		String newNumber = "100A";
 		Integer newNumberBed = 2;
 		Float newPrice = (float)20;
 		Integer newStatus = 0;
 		entity.setApartment(newApartment);
+		entity.setNumber(newNumber);
 		entity.setNumberBed(newNumberBed);
 		entity.setPrice(newPrice);
 		entity.setStatus(newStatus);
@@ -49,6 +53,7 @@ public class RoomDaoTest extends AbstractTest {
 
 		Room updatedEntity = dao.getById(entity.getId());
 		Assertions.assertEquals( newApartment, updatedEntity.getApartment());
+		Assertions.assertEquals( newNumber, updatedEntity.getNumber());
 		Assertions.assertEquals( newNumberBed, updatedEntity.getNumberBed());
 		Assertions.assertEquals( newPrice, updatedEntity.getPrice());
 		Assertions.assertEquals( newStatus, updatedEntity.getStatus());
@@ -59,6 +64,7 @@ public class RoomDaoTest extends AbstractTest {
 	public void testDelete() {
 		Room entity = new Room();
 		entity.setApartment("A");
+		entity.setNumber("100");
 		entity.setNumberBed(1);
 		entity.setPrice(10);
 		entity.setStatus(1);
@@ -75,6 +81,7 @@ public class RoomDaoTest extends AbstractTest {
 	public void testGetById() {
 		Room entity = new Room();
 		entity.setApartment("A");
+		entity.setNumber("100");
 		entity.setNumberBed(1);
 		entity.setPrice(10);
 		entity.setStatus(1);
@@ -85,6 +92,7 @@ public class RoomDaoTest extends AbstractTest {
 		Room selectedEntity = dao.getById(entity.getId());
 
 		Assertions.assertEquals(entity.getApartment(), selectedEntity.getApartment());
+		Assertions.assertEquals(entity.getNumber(), selectedEntity.getNumber());
 		Assertions.assertEquals(entity.getNumberBed(), selectedEntity.getNumberBed());
 		Assertions.assertEquals(entity.getPrice(), selectedEntity.getPrice());
 		Assertions.assertEquals(entity.getStatus(), selectedEntity.getStatus());
@@ -98,6 +106,7 @@ public class RoomDaoTest extends AbstractTest {
 		for (int i = 1; i <= expectedCount; i = i + 1) {
 			Room entity = new Room();
 			entity.setApartment("A" + i); // generate some random meaningless name as it is just a test (the data can be unreal)
+			entity.setNumber("100"+i);
 			entity.setNumberBed(1+i);
 			entity.setPrice(10+i);
 			entity.setStatus(0+i);
