@@ -10,6 +10,8 @@ import java.util.List;
 import by.grsu.zajceva.hotel.bd.dao.AbstractDao;
 import by.grsu.zajceva.hotel.bd.dao.IDao;
 import by.grsu.zajceva.hotel.bd.model.Order;
+import by.grsu.zajceva.hotel.web.dto.SortDto;
+import by.grsu.zajceva.hotel.web.dto.TableStateDto;
 
 
 
@@ -116,5 +118,43 @@ public class OrderDaoImpl extends AbstractDao implements IDao<Integer, Order> {
 		entity.setUpdated(rs.getTimestamp("updated"));
 		return entity;
 	}
+	@Override
+	public List<Order> find(TableStateDto tableStateDto) {
+		List<Order> entitiesList = new ArrayList<>();
+		try (Connection c = createConnection()) {
+			StringBuilder sql = new StringBuilder("select * from orderObject");
 
+			final SortDto sortDto = tableStateDto.getSort();
+			if (sortDto != null) {
+				sql.append(String.format(" order by %s %s", sortDto.getColumn(), resolveSortOrder(sortDto)));
+			}
+
+			sql.append(" limit " + tableStateDto.getItemsPerPage());
+			sql.append(" offset " + resolveOffset(tableStateDto));
+
+			System.out.println("searching Order using SQL: " + sql);
+			ResultSet rs = c.createStatement().executeQuery(sql.toString());
+			while (rs.next()) {
+				Order entity = rowToEntity(rs);
+				entitiesList.add(entity);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("can't select Order entities", e);
+		}
+		return entitiesList;
+		
+	}
+
+	@Override
+	public int count() {
+		try (Connection c = createConnection()) {
+			PreparedStatement pstmt = c.prepareStatement("select count(*) as c from orderObject");
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("c");
+		} catch (SQLException e) {
+			throw new RuntimeException("can't get orders count", e);
+		}
+		
+	}
 }

@@ -18,7 +18,7 @@
 			<input type="hidden" name="id" value="${dto.id}" />
 			<div class="row">
 				<div class="input-field col s12">  
-					<input type="text" name="timeStay" value="${dto.timeStay}"  > <label for="timeStay">Time stay</label>
+					<input type="number" required name="timeStay" value="${dto.timeStay}"  > <label for="timeStay">Time stay</label>
 				</div>
 			</div>
 			<div class="row">

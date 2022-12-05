@@ -15,16 +15,30 @@ import com.google.common.base.Strings;
 
 import by.grsu.zajceva.hotel.bd.dao.IDao;
 import by.grsu.zajceva.hotel.bd.dao.impl.RoomDaoImpl;
+import by.grsu.zajceva.hotel.bd.model.Order;
 import by.grsu.zajceva.hotel.bd.model.Room;
+import by.grsu.zajceva.hotel.web.ValidationUtils;
 import by.grsu.zajceva.hotel.web.dto.RoomDto;
+import by.grsu.zajceva.hotel.web.dto.TableStateDto;
 
 
 
-public class RoomServlet extends HttpServlet {
+public class RoomServlet extends AbstractListServlet {
 	private static final IDao<Integer, Room> roomDao = RoomDaoImpl.INSTANCE;
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		/*(String paramId = req.getParameter("id");
+
+		// validation
+		if (!ValidationUtils.isInteger(paramId)) {
+			res.sendError(400); // send HTTP status 400 and close response
+			return;
+		}
+
+		Integer roomId = Integer.parseInt(paramId); // read request parameter
+		Room roomById = roomDao.getById(roomId); // from DB
+		*/
 		System.out.println("doGet");
 		String viewParam = req.getParameter("view");
 		if ("edit".equals(viewParam)) {
@@ -35,9 +49,18 @@ public class RoomServlet extends HttpServlet {
 	}
 
 	private void handleListView(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		List<Room> orders = roomDao.getAll(); // get data
+		int totalRooms = roomDao.count(); // get count of ALL items
 
-		List<RoomDto> dtos = orders.stream().map((entity) -> {
+		final TableStateDto tableStateDto = resolveTableStateDto(req, totalRooms); // init TableStateDto for specific
+																					// Servlet and saves it in current
+																					// request using key
+																					// "currentPageTableState" to be
+																					// used by 'paging' component
+
+		List<Room> rooms = roomDao.find(tableStateDto); // get data using paging and sorting params
+		//List<Room> orders = roomDao.getAll(); // get data
+
+		List<RoomDto> dtos = rooms.stream().map((entity) -> {
 			RoomDto dto = new RoomDto();
 			// copy necessary fields as-is
 			dto.setId(entity.getId());
@@ -62,7 +85,17 @@ public class RoomServlet extends HttpServlet {
 		RoomDto dto = new RoomDto();
 		if (!Strings.isNullOrEmpty(roomIdStr)) {
 			// object edit
-			Integer roomId = Integer.parseInt(roomIdStr);
+			String paramId = req.getParameter("id");
+
+			// validation
+			if (!ValidationUtils.isInteger(paramId)) {
+				res.sendError(400); // send HTTP status 400 and close response
+				return;
+			}
+
+			Integer roomId = Integer.parseInt(paramId); // read request parameter
+			Room roomById = roomDao.getById(roomId); // from DB
+			 roomId = Integer.parseInt(roomIdStr);
 			Room entity = roomDao.getById(roomId);
 			dto.setId(entity.getId());
 			dto.setApartment(entity.getApartment());

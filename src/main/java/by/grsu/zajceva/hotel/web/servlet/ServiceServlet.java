@@ -17,18 +17,33 @@ import com.google.common.base.Strings;
 
 import by.grsu.zajceva.hotel.bd.dao.IDao;
 import by.grsu.zajceva.hotel.bd.dao.impl.ServiceDaoImpl;
+import by.grsu.zajceva.hotel.bd.model.Order;
+import by.grsu.zajceva.hotel.bd.model.Room;
 import by.grsu.zajceva.hotel.bd.model.Service;
+import by.grsu.zajceva.hotel.web.ValidationUtils;
 import by.grsu.zajceva.hotel.web.dto.ServiceDto;
+import by.grsu.zajceva.hotel.web.dto.TableStateDto;
 
 
 
 
 
-public class ServiceServlet extends HttpServlet {
+public class ServiceServlet extends AbstractListServlet {
 	private static final IDao<Integer, Service> serviceDao = ServiceDaoImpl.INSTANCE;
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		/*String paramId = req.getParameter("id");
+
+		// validation
+		if (!ValidationUtils.isInteger(paramId)) {
+			res.sendError(400); // send HTTP status 400 and close response
+			return;
+		}
+
+		Integer serviceId = Integer.parseInt(paramId); // read request parameter
+		Service ServiceById = serviceDao.getById(serviceId); // from DB
+		*/
 		System.out.println("doGet");
 		String viewParam = req.getParameter("view");
 		if ("edit".equals(viewParam)) {
@@ -38,7 +53,16 @@ public class ServiceServlet extends HttpServlet {
 		}
 	}
 	private void handleListView(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		List<Service> service = serviceDao.getAll(); // get data
+		int totalServices = serviceDao.count(); // get count of ALL items
+
+		final TableStateDto tableStateDto = resolveTableStateDto(req, totalServices); // init TableStateDto for specific
+																					// Servlet and saves it in current
+																					// request using key
+																					// "currentPageTableState" to be
+																					// used by 'paging' component
+
+		List<Service> service = serviceDao.find(tableStateDto); // get data using paging and sorting params
+		//List<Service> service = serviceDao.getAll(); // get data
 
 		List<ServiceDto> dtos = service.stream().map((entity) -> {
 			ServiceDto dto = new ServiceDto();
@@ -61,7 +85,17 @@ public class ServiceServlet extends HttpServlet {
 		ServiceDto dto = new ServiceDto();
 		if (!Strings.isNullOrEmpty(serviceIdStr)) {
 			// object edit
-			Integer serviceId = Integer.parseInt(serviceIdStr);
+			String paramId = req.getParameter("id");
+
+			// validation
+			if (!ValidationUtils.isInteger(paramId)) {
+				res.sendError(400); // send HTTP status 400 and close response
+				return;
+			}
+
+			Integer serviceId = Integer.parseInt(paramId); // read request parameter
+			Service ServiceById = serviceDao.getById(serviceId); // from DB
+			 serviceId = Integer.parseInt(serviceIdStr);
 			Service entity = serviceDao.getById(serviceId);
 			dto.setId(entity.getId());
 			dto.setType(entity.getType());

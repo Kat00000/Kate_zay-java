@@ -11,6 +11,8 @@ import java.util.List;
 import by.grsu.zajceva.hotel.bd.dao.AbstractDao;
 import by.grsu.zajceva.hotel.bd.dao.IDao;
 import by.grsu.zajceva.hotel.bd.model.Room;
+import by.grsu.zajceva.hotel.web.dto.SortDto;
+import by.grsu.zajceva.hotel.web.dto.TableStateDto;
 
 
 
@@ -120,5 +122,41 @@ public class RoomDaoImpl extends AbstractDao implements IDao<Integer, Room> {
 		entity.setUpdated(rs.getTimestamp("updated"));
 		return entity;
 	}
+	@Override
+	public List<Room> find(TableStateDto tableStateDto) {
+		List<Room> entitiesList = new ArrayList<>();
+		try (Connection c = createConnection()) {
+			StringBuilder sql = new StringBuilder("select * from room");
 
+			final SortDto sortDto = tableStateDto.getSort();
+			if (sortDto != null) {
+				sql.append(String.format(" order by %s %s", sortDto.getColumn(), resolveSortOrder(sortDto)));
+			}
+
+			sql.append(" limit " + tableStateDto.getItemsPerPage());
+			sql.append(" offset " + resolveOffset(tableStateDto));
+
+			System.out.println("searching Rooms using SQL: " + sql);
+			ResultSet rs = c.createStatement().executeQuery(sql.toString());
+			while (rs.next()) {
+				Room entity = rowToEntity(rs);
+				entitiesList.add(entity);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("can't select Room entities", e);
+		}
+		return entitiesList;
+	}
+
+	@Override
+	public int count() {
+		try (Connection c = createConnection()) {
+			PreparedStatement pstmt = c.prepareStatement("select count(*) as c from room");
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("c");
+		} catch (SQLException e) {
+			throw new RuntimeException("can't get rooms count", e);
+		}
+	}
 }

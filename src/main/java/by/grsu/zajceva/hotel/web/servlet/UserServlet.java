@@ -15,17 +15,27 @@ import com.google.common.base.Strings;
 
 import by.grsu.zajceva.hotel.bd.dao.IDao;
 import by.grsu.zajceva.hotel.bd.dao.impl.UserDaoImpl;
+import by.grsu.zajceva.hotel.bd.model.Service;
 import by.grsu.zajceva.hotel.bd.model.User;
+import by.grsu.zajceva.hotel.web.ValidationUtils;
+import by.grsu.zajceva.hotel.web.dto.TableStateDto;
 import by.grsu.zajceva.hotel.web.dto.UserDto;
 
 
 
 
-public class UserServlet extends HttpServlet {
+public class UserServlet extends AbstractListServlet {
 	private static final IDao<Integer, User> userDao = UserDaoImpl.INSTANCE;
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		
+
+		
+
+		
+		
 		System.out.println("doGet");
 		String viewParam = req.getParameter("view");
 		if ("edit".equals(viewParam)) {
@@ -36,7 +46,17 @@ public class UserServlet extends HttpServlet {
 	}
 
 	private void handleListView(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		List<User> users = userDao.getAll(); // get data
+		
+		int totalUsers = userDao.count(); // get count of ALL items
+
+		final TableStateDto tableStateDto = resolveTableStateDto(req, totalUsers); // init TableStateDto for specific
+																					// Servlet and saves it in current
+																					// request using key
+																					// "currentPageTableState" to be
+																					// used by 'paging' component
+
+		List<User> users = userDao.find(tableStateDto); // get data using paging and sorting params
+		//List<User> users = userDao.getAll(); // get data
 
 		List<UserDto> dtos = users.stream().map((entity) -> {
 			UserDto dto = new UserDto();
@@ -61,7 +81,15 @@ public class UserServlet extends HttpServlet {
 		UserDto dto = new UserDto();
 		if (!Strings.isNullOrEmpty(userIdStr)) {
 			// object edit
-			Integer userId = Integer.parseInt(userIdStr);
+			String paramId = req.getParameter("id");
+			// validation
+			if (!ValidationUtils.isInteger(paramId)) {
+				res.sendError(400); // send HTTP status 400 and close response
+				return;
+			}
+			Integer userId = Integer.parseInt(paramId); // read request parameter
+			User UserById = userDao.getById(userId); // from DB
+			 userId = Integer.parseInt(userIdStr);
 			User entity = userDao.getById(userId);
 			dto.setId(entity.getId());
 			dto.setName(entity.getName());

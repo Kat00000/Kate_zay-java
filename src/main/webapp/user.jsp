@@ -4,6 +4,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="mytaglib" uri="my-custom-tags-uri"%>
 <c:set var="pageTitle" value="User list" scope="application" />
 <t:wrapper>
 	<h1>User list</h1>
@@ -17,12 +18,12 @@
 	<table>
 		<thead>
 			<tr>
-				<th>id</th>
-				<th>name</th>
-				<th>email</th>
-				<th>password</th>
-				<th>created</th>
-				<th>updated</th>
+			<th><mytaglib:sort-link pageUrl="${pageUrl}" column="id">DB ID</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="name">name</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="email">email</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="password">password</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="updated">Update date</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="created">Creation date</mytaglib:sort-link></th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -41,4 +42,5 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<t:paging />
 </t:wrapper>

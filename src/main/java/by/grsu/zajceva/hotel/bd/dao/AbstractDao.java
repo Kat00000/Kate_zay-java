@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.sqlite.SQLiteConfig;
+
+import by.grsu.zajceva.hotel.web.dto.SortDto;
+import by.grsu.zajceva.hotel.web.dto.TableStateDto;
 public class AbstractDao {
 	private static final String DB_FOLDER = "db-storage";
 	private static String DB_URL;
@@ -71,6 +74,15 @@ public class AbstractDao {
 		System.out.println(String.format("delete DB %s", DB_NAME));
 		File dbDataFile = new File(String.format("%s/%s", DB_FOLDER, DB_NAME));
 		dbDataFile.delete();
+	}
+	protected int resolveOffset(TableStateDto dto) {
+		int offset = dto.getItemsPerPage() * (dto.getPage() - 1);
+		return dto.getTotalCount() < offset ? 0 : offset;
+
+	}
+
+	protected String resolveSortOrder(SortDto sortDto) {
+		return sortDto.isAscending() ? "asc" : "desc";
 	}
 
 }

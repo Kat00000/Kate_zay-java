@@ -19,10 +19,11 @@
 	<div class="nav-wrapper container">
 		<a id="logo-container" href="#" class="brand-logo">Logo</a>
 		<ul class="right hide-on-med-and-down">
-		    <li><a href="order"> Items list</a></li>
+		    <li><a href="order"> Orders list</a></li>
 		    <li><a href="user"> Users</a></li>
 			<li><a href="room"> Hotel rooms</a></li>
 			<li><a href="service"> Services</a></li>
+			<li class="active"><a onclick="sendHTTPDelete('/login')">Logout</a></li>
 			
 		</ul>
 	</div>

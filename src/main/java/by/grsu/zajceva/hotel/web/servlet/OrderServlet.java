@@ -22,14 +22,16 @@ import by.grsu.zajceva.hotel.bd.model.Order;
 import by.grsu.zajceva.hotel.bd.model.Room;
 import by.grsu.zajceva.hotel.bd.model.Service;
 import by.grsu.zajceva.hotel.bd.model.User;
+import by.grsu.zajceva.hotel.web.ValidationUtils;
 import by.grsu.zajceva.hotel.web.dto.OrderDto;
 import by.grsu.zajceva.hotel.web.dto.RoomDto;
 import by.grsu.zajceva.hotel.web.dto.ServiceDto;
+import by.grsu.zajceva.hotel.web.dto.TableStateDto;
 import by.grsu.zajceva.hotel.web.dto.UserDto;
 
 
 
-public class OrderServlet extends HttpServlet {
+public class OrderServlet extends AbstractListServlet {
 	private static final IDao<Integer, Order> orderDao = OrderDaoImpl.INSTANCE;
 	private static final IDao<Integer, Room> roomDao = RoomDaoImpl.INSTANCE;
 	private static final IDao<Integer, User> userDao = UserDaoImpl.INSTANCE;
@@ -37,6 +39,7 @@ public class OrderServlet extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	
 		System.out.println("doGet");
 		String viewParam = req.getParameter("view");
 		if ("edit".equals(viewParam)) {
@@ -47,7 +50,17 @@ public class OrderServlet extends HttpServlet {
 	}
 
 	private void handleListView(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		List<Order> orders = orderDao.getAll(); // get data
+		
+		int totalOrders = orderDao.count(); // get count of ALL items
+
+		final TableStateDto tableStateDto = resolveTableStateDto(req, totalOrders); // init TableStateDto for specific
+																					// Servlet and saves it in current
+																					// request using key
+																					// "currentPageTableState" to be
+																					// used by 'paging' component
+
+		List<Order> orders = orderDao.find(tableStateDto); // get data using paging and sorting params
+		//List<Order> orders = orderDao.getAll(); // get data
 
 		List<OrderDto> dtos = orders.stream().map((entity) -> {
 			OrderDto dto = new OrderDto();
@@ -78,7 +91,18 @@ public class OrderServlet extends HttpServlet {
 		OrderDto dto = new OrderDto();
 		if (!Strings.isNullOrEmpty(orderIdStr)) {
 			// object edit
-			Integer orderId = Integer.parseInt(orderIdStr);
+			
+			String paramId = req.getParameter("id");
+
+			// validation
+			if (!ValidationUtils.isInteger(paramId)) {
+				res.sendError(400); // send HTTP status 400 and close response
+				return;
+			}
+
+			Integer orderId = Integer.parseInt(paramId); // read request parameter
+			Order orderById = orderDao.getById(orderId); // from DB
+			 orderId = Integer.parseInt(orderIdStr);
 			Order entity = orderDao.getById(orderId);
 			dto.setId(entity.getId());
 			dto.setTimeStay(entity.getTimeStay());

@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="mytaglib" uri="my-custom-tags-uri"%>
 <c:set var="pageTitle" value="Service list" scope="application" />
 <t:wrapper>
 	<h1>Service list</h1>
@@ -16,11 +17,11 @@
 	<table>
 		<thead>
 			<tr>
-				<th>id</th>
-				<th>type</th>
-				<th>price</th>
-				<th>created</th>
-				<th>updated</th>
+			<th><mytaglib:sort-link pageUrl="${pageUrl}" column="id">DB ID</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="type">type</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="price">price</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="updated">Update date</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="created">Creation date</mytaglib:sort-link></th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -38,4 +39,5 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<t:paging />
 </t:wrapper>
