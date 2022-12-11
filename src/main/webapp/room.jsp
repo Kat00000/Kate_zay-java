@@ -21,7 +21,7 @@
 			<th><mytaglib:sort-link pageUrl="${pageUrl}" column="id">DB ID</mytaglib:sort-link></th>
 				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="apartment">Apartment class</mytaglib:sort-link></th>
 				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="number">Number</mytaglib:sort-link></th>
-				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="numberBed">Number of beds</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="number_bed">Number of beds</mytaglib:sort-link></th>
 				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="price">Price</mytaglib:sort-link></th>
 				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="status">Status</mytaglib:sort-link></th>
 				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="updated">Update date</mytaglib:sort-link></th>

@@ -18,10 +18,10 @@
 		<thead>
 			<tr>
 				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="id">DB ID</mytaglib:sort-link></th>
-				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="timeStay">Time stay</mytaglib:sort-link></th>
-				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="user">User</mytaglib:sort-link></th>
-				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="room">Room</mytaglib:sort-link></th>
-				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="service">Service</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="time_stay">Time stay</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="user_id">User</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="room_id">Room</mytaglib:sort-link></th>
+				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="service_id">Service</mytaglib:sort-link></th>
 				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="updated">Update date</mytaglib:sort-link></th>
 				<th><mytaglib:sort-link pageUrl="${pageUrl}" column="created">Creation date</mytaglib:sort-link></th>
 				<th>actions</th>
